@@ -1,16 +1,4 @@
-const scope = [
-  "admin",
-  "command",
-  "model",
-  "route",
-  "task",
-  "validator",
-  "metrics",
-  "panic",
-  "sentry-api",
-  "graph",
-  "detector"
-];
+const scope = [];
 
 module.exports = {
   extends: ["@commitlint/config-angular"],
