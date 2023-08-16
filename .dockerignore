@@ -23,9 +23,6 @@ sonar-project.properties
 # Ignore all *.pyc files in all folders, including build root
 **/*.pyc
 
-# Ignore current.py file to allow symbolic link creation during docker build
-orange/settings/current.py
-
 assets/
 .venv/
 .env
@@ -36,7 +33,6 @@ Dockerfile
 LICENSE
 __pycache__/
 dict/
-docker/
 commitlint.config.js
 .hadolint.yaml
 celerybeat-schedule*

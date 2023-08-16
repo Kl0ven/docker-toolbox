@@ -3,6 +3,11 @@ FROM python:3.11-alpine3.18
 WORKDIR /app
 
 COPY requirements.txt .
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+
 
 # hadolint ignore=DL3018
 RUN pip install --no-cache-dir -r requirements.txt \
@@ -62,6 +67,19 @@ RUN pip install --no-cache-dir -r requirements.txt \
     util-linux \
     websocat
 
+COPY docker/entrypoint.sh /app/entrypoint.sh
+COPY docker/ssh_config /etc/ssh/ssh_config
+
+WORKDIR /etc/ssh/
+RUN ssh-keygen -A
+
+WORKDIR /app
+
+RUN echo "root:Docker!" | chpasswd \
+    && chmod +x entrypoint.sh
+
 COPY . .
 
-CMD [ "python", "/app/main.py" ]
+EXPOSE 5000 2222
+
+ENTRYPOINT [ "/app/entrypoint.sh" ]
