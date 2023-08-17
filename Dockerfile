@@ -10,8 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 
 # hadolint ignore=DL3018
-RUN pip install --no-cache-dir -r requirements.txt \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
     && apk update \
@@ -57,6 +56,7 @@ RUN pip install --no-cache-dir -r requirements.txt \
     openssh \
     openssl \
     procps \
+    redis \
     scapy \
     socat \
     speedtest-cli \
