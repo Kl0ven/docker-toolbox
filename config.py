@@ -1,17 +1,23 @@
 import logging
+import platform
 import sys
 from os import getenv
 
+from colour import Color
 from flask import has_request_context, request
 from flask.logging import default_handler
 
 HTTP_PORT = int(getenv("HTTP_PORT", "5000"))
 
-
 TEMPLATE_CTX = {
     "fake_version": getenv("FAKE_VERSION", "v1.0.0"),
-    "color": getenv("COLOR", "lime"),
+    "color": getenv("COLOR", "random"),
+    "host_name": platform.node(),
 }
+
+
+if TEMPLATE_CTX["color"] == "random":
+    TEMPLATE_CTX["color"] = Color(pick_for=TEMPLATE_CTX["host_name"]).get_web()
 
 
 class RequestFormatter(logging.Formatter):
