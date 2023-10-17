@@ -2,6 +2,8 @@
 
 Docker + Kubernetes Toolbox for testing and debugging rollout deployment and network issues
 
+⚠ Please be careful This is not meant to run in production.
+
 This image start a simple http server with a few route. It also contains a suite of network tools.
 
 
@@ -30,6 +32,10 @@ Always return 500
 
 ## Dump `/dump`
 Will print The request body / header and environment variable to the console
+
+
+## Dump `/run`
+Will run bash script passed in the POST body and return result
 
 ## Networking Tools
 
