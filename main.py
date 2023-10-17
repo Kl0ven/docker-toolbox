@@ -1,4 +1,5 @@
 import json
+import subprocess
 
 from flask import Flask, render_template, request
 
@@ -35,6 +36,27 @@ def dump():
     print(json.dumps(request, cls=RequestEncoder, indent=2))
 
     return "", 200
+
+
+@app.route("/run", methods=["POST"])
+def run():
+    timeout = int(request.args.get("timeout", "10"))
+    try:
+        ret = subprocess.run(
+            request.data.decode().replace("\r\n", "\n"),
+            shell=True,
+            capture_output=True,
+            timeout=timeout,
+        )
+        ctx = {
+            "returncode": ret.returncode,
+            "stdout": ret.stdout.decode(),
+            "stderr": ret.stderr.decode(),
+        }
+    except subprocess.TimeoutExpired:
+        ctx = {"returncode": "timeout", "stdout": "", "stderr": ""}
+
+    return render_template("command.txt.j2", **ctx)
 
 
 if __name__ == "__main__":
